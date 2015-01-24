@@ -13,7 +13,7 @@ class DefaultController extends Controller {
 			if(!CJSON::decode($response)) {
 				$model->saveUrl();
 				$response = CJSON::encode([
-					'short_url' => $model->getShortUrl(),
+					'generated_url' => $model->getShortUrl(),
 				]);
 			}
 

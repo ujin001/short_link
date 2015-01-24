@@ -4,10 +4,22 @@
 			'enableClientValidation' => false,
 			'enableAjaxValidation' => true,
 			'clientOptions' => [
+				'validateOnChange' => false,
 				'validateOnSubmit' => true,
-				'afterValidate' => 'return true;',
+				'beforeValidate' => 'js: function(form) {
+					main.beforeValidate(form);
+					return true;
+				}',
+				'afterValidate' => 'js: function(form, data, hasError) {
+					main.afterValidate(data);
+					return false;
+				}',
 			],
 	]); ?>
+
+	<div class="flash-success hide">
+		Короткая ссылка: <span id="short_url"></span>
+	</div>
 
 	<div class="row">
 		<?= $form->textField($model, 'original_url', [
