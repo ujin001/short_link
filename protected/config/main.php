@@ -39,6 +39,7 @@ return [
 			'showScriptName' => false,
 			'rules' => [
 				'/' => 'default/index',
+				'/<hash:\w+>'=>'default/redirect',
 			],
 		],
 

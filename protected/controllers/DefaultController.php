@@ -22,4 +22,13 @@ class DefaultController extends Controller {
 			'model' => $model,
 		]);
 	}
+
+	public function actionRedirect($hash) {
+		$url = Url::model()->getOriginalUrlByHash($hash);
+
+		if(empty($url)) {
+			throw new CHttpException(404, 'Указан несуществующий адрес');
+		}
+		$this->redirect($url);
+	}
 }

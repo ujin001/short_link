@@ -89,4 +89,11 @@ class Url extends CActiveRecord {
 
 		return Yii::app()->createAbsoluteUrl('/'.$this->hash);
 	}
+
+	public function getOriginalUrlByHash($hash) {
+		$id = Yii::app()->urlGenerator->decode($hash);
+
+		$model = $this->findByPk($id);
+		return !empty($model) ? $model->original_url : '';
+	}
 }
