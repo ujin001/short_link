@@ -3,6 +3,8 @@
 class DefaultController extends Controller {
 
 	public function actionIndex() {
+		$this->setPageTitle('Укротитель ссылок');
+
 		$model = new Url();
 
 		if(isset($_POST['ajax']) && $_POST['ajax']==='url-generation-form') {

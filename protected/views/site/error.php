@@ -3,13 +3,14 @@
 /* @var $error array */
 
 $this->pageTitle=Yii::app()->name . ' - Error';
-$this->breadcrumbs=array(
-	'Error',
-);
 ?>
 
-<h2>Error <?php echo $code; ?></h2>
+<h2>Упс! <?php echo $code; ?></h2>
 
 <div class="error">
-<?php echo CHtml::encode($message); ?>
+	<?php echo CHtml::encode($message); ?>
+</div>
+
+<div class="prepend-top">
+	<?= CHtml::link('Укоротить ссылку!', $this->createAbsoluteUrl('/'))?>
 </div>
