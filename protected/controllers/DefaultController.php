@@ -7,8 +7,15 @@ class DefaultController extends Controller {
 
 		if(isset($_POST['ajax']) && $_POST['ajax']==='url-generation-form') {
 
-			echo CActiveForm::validate($model);
-			exit;
+			$response = CActiveForm::validate($model);
+			if(!CJSON::decode($response)) {
+				$model->save();
+				$response = CJSON::encode([
+					'short_url' => $model->getShortUrl(),
+				]);
+			}
+
+			echo $response;
 			Yii::app()->end();
 		}
 		$this->render('index', [

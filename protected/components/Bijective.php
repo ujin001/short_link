@@ -1,10 +1,10 @@
 <?php
 
-class Bijective extends CCom {
+class Bijective extends CComponent {
 
 	public $dictionary = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-	public function __construct() {
+	public function init() {
 		$this->dictionary = str_split($this->dictionary);
 	}
 

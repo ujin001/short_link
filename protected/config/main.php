@@ -27,6 +27,10 @@ return [
 
 	'components' => [
 
+		'urlGenerator' => [
+			'class' => 'application.components.Bijective',
+		],
+
 		'user' => [
 			'allowAutoLogin' => true,
 		],

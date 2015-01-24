@@ -30,7 +30,8 @@ class Url extends CActiveRecord {
 
 	public function afterSave() {
 		if(empty($this->hash) and !empty($this->id)) {
-			$this->hash = Yii::app()->urlGenerator->generate($this->id);
+			$this->setIsNewRecord(false);
+			$this->hash = Yii::app()->urlGenerator->encode($this->id);
 			$this->save();
 		}
 		return true;
@@ -79,5 +80,13 @@ class Url extends CActiveRecord {
 	 */
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
+	}
+
+	public function getShortUrl() {
+		if(empty($this->hash)) {
+			return null;
+		}
+
+		return Yii::app()->createAbsoluteUrl('/'.$this->hash);
 	}
 }

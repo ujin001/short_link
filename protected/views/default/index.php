@@ -5,6 +5,7 @@
 			'enableAjaxValidation' => true,
 			'clientOptions' => [
 				'validateOnSubmit' => true,
+				'afterValidate' => 'return true;',
 			],
 	]); ?>
 
