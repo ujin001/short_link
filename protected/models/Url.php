@@ -96,4 +96,25 @@ class Url extends CActiveRecord {
 		$model = $this->findByPk($id);
 		return !empty($model) ? $model->original_url : '';
 	}
+
+	/**
+	 * Поиск хеша по оригинальному адресу
+	 * @param $original_url
+	 * @return array|bool|mixed|null
+	 */
+	public function findHashByOriginalUrl($original_url) {
+		$model = $this->findByAttributes(array('original_url' => $original_url));
+
+		return empty($model) ? false : $model->hash;
+	}
+
+	public function saveUrl() {
+		$this->hash = $this->findHashByOriginalUrl($this->original_url);
+
+		if(!empty($this->hash)) {
+			return true;
+		}
+
+		return $this->save();
+	}
 }

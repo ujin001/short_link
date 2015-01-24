@@ -9,7 +9,7 @@ class DefaultController extends Controller {
 
 			$response = CActiveForm::validate($model);
 			if(!CJSON::decode($response)) {
-				$model->save();
+				$model->saveUrl();
 				$response = CJSON::encode([
 					'short_url' => $model->getShortUrl(),
 				]);
