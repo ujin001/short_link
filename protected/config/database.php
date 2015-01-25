@@ -3,10 +3,10 @@
 // This is the database connection configuration.
 return array(
 	// uncomment the following lines to use a MySQL database
-	'connectionString' => 'mysql:host=localhost;dbname=short_link',
+	'connectionString' => 'mysql:host=localhost;dbname={db_name}',
 	'emulatePrepare' => true,
-	'username' => 'short_link',
-	'password' => '1q2w3e',
+	'username' => '{db_username}',
+	'password' => '{db_password}',
 	'charset' => 'utf8',
 
 );
