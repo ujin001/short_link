@@ -24,8 +24,15 @@ class Url extends CActiveRecord {
 			['hash', 'safe'],
 			['original_url', 'required', 'message' => 'Необходимо указать адрес'],
 			['original_url', 'url', 'allowEmpty' => false, 'message' => 'Вы указали некорректный адрес'],
-			['original_url', 'validateUrl'],
 		];
+	}
+
+	public function beforeValidate() {
+		$protocol = '://';
+		if(!strstr($this->original_url, $protocol)) {
+			$this->original_url = 'http'.$protocol.trim($this->original_url);
+		}
+		return true;
 	}
 
 	public function afterSave() {
@@ -35,23 +42,6 @@ class Url extends CActiveRecord {
 			$this->save();
 		}
 		return true;
-	}
-
-	/**
-	 * Проверка, что адрес существует
-	 */
-	public function validateUrl() {
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->original_url);
-		curl_setopt($ch, CURLOPT_HEADER, TRUE);
-		curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_exec($ch);
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		curl_close($ch);
-		if($httpCode != 200) {
-			$this->addError('original_url', 'Указан несуществующий адрес');
-		};
 	}
 
 	/**
@@ -82,6 +72,10 @@ class Url extends CActiveRecord {
 		return parent::model($className);
 	}
 
+	/**
+	 * Возвращает абсолютный короткий урл
+	 * @return string|null
+	 **/
 	public function getShortUrl() {
 		if(empty($this->hash)) {
 			return null;
@@ -90,6 +84,10 @@ class Url extends CActiveRecord {
 		return Yii::app()->createAbsoluteUrl('/'.$this->hash);
 	}
 
+	/**
+	 * Возвращает урл по хешшу
+	 * @return string|null
+	 **/
 	public function getOriginalUrlByHash($hash) {
 		$id = Yii::app()->urlGenerator->decode($hash);
 
@@ -108,6 +106,10 @@ class Url extends CActiveRecord {
 		return empty($model) ? false : $model->hash;
 	}
 
+	/**
+	 * Проверяет, существует ли данный урл в базе, если нет - сохраняет
+	 * @return bool
+	**/
 	public function saveUrl() {
 		$this->hash = $this->findHashByOriginalUrl($this->original_url);
 
