@@ -3,11 +3,11 @@
 class m150124_085139_create_table_url extends CDbMigration {
 
 	public function up() {
-		$this->createTable('tbl_urls', array(
+		$this->createTable('tbl_urls', [
 			'id' => 'int AUTO_INCREMENT PRIMARY KEY',
 			'hash' => 'varchar(10)',
 			'original_url' => 'varchar(255)'
-		));
+		]);
 	}
 
 	public function down() {

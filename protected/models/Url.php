@@ -101,7 +101,7 @@ class Url extends CActiveRecord {
 	 * @return array|bool|mixed|null
 	 */
 	public function findHashByOriginalUrl($original_url) {
-		$model = $this->findByAttributes(array('original_url' => $original_url));
+		$model = $this->findByAttributes(['original_url' => $original_url]);
 
 		return empty($model) ? false : $model->hash;
 	}
